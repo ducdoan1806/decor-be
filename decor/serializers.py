@@ -76,6 +76,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "id",
             "title",
             "slug",
+            "description",
             "content",
             "author_name",
             "status",
@@ -96,4 +97,4 @@ class FAQSerializer(serializers.ModelSerializer):
 class ContactInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactInfo
-        fields = ["type", "value"]
+        fields = ["id", "type", "name", "value", "image"]

@@ -112,6 +112,7 @@ class BlogPostAdmin(admin.ModelAdmin):
     fields = (
         "title",
         "slug",
+        "description",
         "content",
         "author_name",
         "status",
@@ -143,7 +144,14 @@ class FAQAdmin(admin.ModelAdmin):
 
 @admin.register(ContactInfo)
 class ContactInfoAdmin(admin.ModelAdmin):
-    list_display = ("name", "type", "value")
+    list_display = ("name", "type", "value", "image_preview")
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="height: 100px;" />', obj.image.url)
+        return "-"
+
+    image_preview.short_description = "Preview"
 
 
 @admin.register(Slide)

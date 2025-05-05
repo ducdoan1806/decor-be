@@ -128,6 +128,7 @@ class BlogPost(models.Model):
     ]
 
     title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
     thumbnail = models.ImageField(upload_to="blog/", blank=True, null=True)
     slug = models.SlugField(
         max_length=255,
@@ -197,10 +198,12 @@ class ContactInfo(models.Model):
         ("facebook", "Facebook"),
         ("tiktok", "Tiktok"),
         ("instagram", "Instagram"),
+        ("zalo", "Zalo"),
     ]
     type = models.CharField(max_length=20, choices=STATUS_CHOICES, default="location")
     name = models.CharField(max_length=255)
     value = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to="contact/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
