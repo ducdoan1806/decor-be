@@ -108,6 +108,27 @@ class BlogPostAdmin(admin.ModelAdmin):
     filter_horizontal = ("categories",)
     inlines = [BlogCommentInline]
     form = BlogPostForm
+    readonly_fields = ("thumbnail_preview",)
+    fields = (
+        "title",
+        "slug",
+        "content",
+        "author_name",
+        "status",
+        "thumbnail",
+        "thumbnail_preview",
+        "categories",
+        "published_at",
+    )
+
+    def thumbnail_preview(self, obj):
+        if obj.thumbnail:
+            return format_html(
+                '<img src="{}" style="height: 120px;" />', obj.thumbnail.url
+            )
+        return "-"
+
+    thumbnail_preview.short_description = "Thumbnail"
 
 
 # --- FAQ Admin ---
@@ -118,3 +139,23 @@ class FAQAdmin(admin.ModelAdmin):
     list_display = ("question", "sort_order")
     list_editable = ("sort_order",)
     ordering = ("sort_order",)
+
+
+@admin.register(ContactInfo)
+class ContactInfoAdmin(admin.ModelAdmin):
+    list_display = ("name", "type", "value")
+
+
+@admin.register(Slide)
+class SlideAdmin(admin.ModelAdmin):
+    list_display = ("title", "sort_order", "image_preview", "link")
+    list_editable = ("sort_order",)
+    readonly_fields = ("image_preview",)
+    fields = ("title", "image", "image_preview", "link", "sort_order")
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="height: 100px;" />', obj.image.url)
+        return "-"
+
+    image_preview.short_description = "Preview"

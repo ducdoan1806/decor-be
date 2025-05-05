@@ -1,22 +1,6 @@
 from rest_framework import viewsets, filters
-from .models import (
-    Product,
-    Page,
-    ContactMessage,
-    BlogCategory,
-    BlogPost,
-    BlogComment,
-    FAQ,
-)
-from .serializers import (
-    ProductSerializer,
-    PageSerializer,
-    ContactMessageSerializer,
-    BlogCategorySerializer,
-    BlogPostSerializer,
-    BlogCommentSerializer,
-    FAQSerializer,
-)
+from .models import *
+from .serializers import *
 
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
@@ -69,3 +53,8 @@ class FAQViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FAQSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ["question", "answer"]
+
+
+class ContactInfoViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ContactInfo.objects.all()
+    serializer_class = ContactInfoSerializer

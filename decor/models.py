@@ -128,6 +128,7 @@ class BlogPost(models.Model):
     ]
 
     title = models.CharField(max_length=255)
+    thumbnail = models.ImageField(upload_to="blog/", blank=True, null=True)
     slug = models.SlugField(
         max_length=255,
         unique=True,
@@ -186,3 +187,40 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class ContactInfo(models.Model):
+    STATUS_CHOICES = [
+        ("location", "Location"),
+        ("email", "Email"),
+        ("phone", "Phone"),
+        ("facebook", "Facebook"),
+        ("tiktok", "Tiktok"),
+        ("instagram", "Instagram"),
+    ]
+    type = models.CharField(max_length=20, choices=STATUS_CHOICES, default="location")
+    name = models.CharField(max_length=255)
+    value = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.get_type_display()}: {self.name}"
+
+    class Meta:
+        verbose_name = "Thông tin liên hệ"
+        verbose_name_plural = "Thông tin liên hệ"
+
+
+class Slide(models.Model):
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="slides/")
+    link = models.URLField(blank=True, null=True)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["sort_order"]
+        verbose_name = "Slide"
+        verbose_name_plural = "Slides"
+
+    def __str__(self):
+        return self.title

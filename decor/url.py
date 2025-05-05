@@ -13,5 +13,5 @@ router.register(r"blog/comments", BlogCommentViewSet)
 router.register(r"faqs", FAQViewSet)
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("", include(router.urls)),
 ]
