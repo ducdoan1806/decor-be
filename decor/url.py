@@ -12,6 +12,7 @@ router.register(r"blog/posts", BlogPostViewSet)
 router.register(r"blog/comments", BlogCommentViewSet)
 router.register(r"faqs", FAQViewSet)
 router.register(r"contact-info", ContactInfoViewSet)
+router.register(r"slide", SlideViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

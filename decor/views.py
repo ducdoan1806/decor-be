@@ -1,14 +1,23 @@
 from rest_framework import viewsets, filters
 from .models import *
 from .serializers import *
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    GET /api/products/?category=<slug>&search=<term>&ordering=<field>&page=<n>
+    """
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = "slug"
-    filter_backends = [filters.SearchFilter]
-    search_fields = ["name", "description"]
+    filter_backends = [
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    search_fields = ["name", "category__slug"]
+    ordering_fields = ["price", "created_at"]
 
 
 class PageViewSet(viewsets.ReadOnlyModelViewSet):
@@ -58,3 +67,8 @@ class FAQViewSet(viewsets.ReadOnlyModelViewSet):
 class ContactInfoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer
+
+
+class SlideViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Slide.objects.all()
+    serializer_class = SlideSerializer

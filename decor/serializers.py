@@ -3,10 +3,16 @@ from rest_framework import serializers
 from .models import *
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id", "name", "slug"]
+
+
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ["id", "image_url", "alt_text", "sort_order"]
+        fields = ["id", "image", "alt_text", "sort_order"]
 
 
 class ProductVariantSerializer(serializers.ModelSerializer):
@@ -22,9 +28,11 @@ class ProductReviewSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+
     images = ProductImageSerializer(many=True, read_only=True)
     variants = ProductVariantSerializer(many=True, read_only=True)
     reviews = ProductReviewSerializer(many=True, read_only=True)
+    category = CategorySerializer(read_only=True)
 
     class Meta:
         model = Product
@@ -34,6 +42,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "slug",
             "description",
             "price",
+            "category",
             "created_at",
             "updated_at",
             "images",
@@ -98,3 +107,9 @@ class ContactInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactInfo
         fields = ["id", "type", "name", "value", "image"]
+
+
+class SlideSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Slide
+        fields = ["id", "title", "link", "image", "sort_order"]

@@ -7,7 +7,17 @@ from django import forms
 from ckeditor.widgets import CKEditorWidget  # nếu đã cài ckeditor
 from slugify import slugify
 
-# --- Product Admin ---
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("name", "slug", "product_count")
+    prepopulated_fields = {"slug": ("name",)}
+    search_fields = ("name",)
+
+    def product_count(self, obj):
+        return obj.products.count()
+
+    product_count.short_description = "Số sản phẩm"
 
 
 class ProductImageInline(admin.TabularInline):
@@ -38,12 +48,11 @@ class ProductReviewInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "price", "created_at", "updated_at")
+    list_display = ("name", "price", "created_at", "category", "updated_at")
     search_fields = ("name",)
-    list_filter = ("created_at",)
+    list_filter = ("category", "created_at")
     prepopulated_fields = {"slug": ("name",)}
     inlines = [ProductImageInline, ProductVariantInline, ProductReviewInline]
-    prepopulated_fields = {"slug": ("name",)}
 
 
 # --- Page Admin ---
