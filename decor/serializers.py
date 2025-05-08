@@ -85,6 +85,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "id",
             "title",
             "slug",
+            "thumbnail",
             "description",
             "content",
             "author_name",

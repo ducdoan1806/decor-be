@@ -2,12 +2,10 @@ from rest_framework import viewsets, filters
 from .models import *
 from .serializers import *
 from django_filters.rest_framework import DjangoFilterBackend
+from .filters import BlogPostFilter
 
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    GET /api/products/?category=<slug>&search=<term>&ordering=<field>&page=<n>
-    """
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -43,10 +41,11 @@ class BlogCategoryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = BlogPost.objects.filter(status="published")
+    queryset = BlogPost.objects.filter(status="published").distinct()
     serializer_class = BlogPostSerializer
     lookup_field = "slug"
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = BlogPostFilter
     search_fields = ["title", "content", "author_name"]
 
 
