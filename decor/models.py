@@ -141,7 +141,7 @@ class ContactMessage(models.Model):
         verbose_name_plural = "Tin nhắn liên hệ"
 
     def __str__(self):
-        return f"{self.name} - {self.created_at}"
+        return f"{self.name} - {self.phone_number}"
 
 
 class BlogCategory(models.Model):
