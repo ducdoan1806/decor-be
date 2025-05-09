@@ -65,7 +65,9 @@ class PageAdmin(admin.ModelAdmin):
     search_fields = ("title",)
 
 
-# --- ContactMessage Admin ---
+@admin.register(GoogleServiceAccount)
+class GoogleServiceAccountAdmin(admin.ModelAdmin):
+    list_display = ["name", "spreadsheet_id"]
 
 
 @admin.register(ContactMessage)

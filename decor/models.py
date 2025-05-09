@@ -120,6 +120,15 @@ class Page(models.Model):
         return self.title
 
 
+class GoogleServiceAccount(models.Model):
+    name = models.CharField(max_length=100, default="default")
+    credentials_file = models.FileField(upload_to="credentials/")
+    spreadsheet_id = models.CharField(max_length=100, help_text="Google Sheet ID")
+
+    def __str__(self):
+        return self.name
+
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=20, blank=True)
