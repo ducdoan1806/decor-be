@@ -122,9 +122,8 @@ class Page(models.Model):
 
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField()
-    subject = models.CharField(max_length=255, blank=True)
-    message = models.TextField()
+    phone_number = models.CharField(max_length=20, blank=True)
+    message = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -133,7 +132,7 @@ class ContactMessage(models.Model):
         verbose_name_plural = "Tin nhắn liên hệ"
 
     def __str__(self):
-        return f"{self.name} - {self.subject or 'No Subject'}"
+        return f"{self.name} - {self.created_at}"
 
 
 class BlogCategory(models.Model):

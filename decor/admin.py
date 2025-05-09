@@ -70,9 +70,9 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "subject", "created_at")
-    search_fields = ("name", "email", "subject")
-    readonly_fields = ("name", "email", "subject", "message", "created_at")
+    list_display = ("name", "phone_number", "created_at")
+    search_fields = ("name", "phone_number")
+    readonly_fields = ("name", "phone_number", "message", "created_at")
     ordering = ("-created_at",)
 
 

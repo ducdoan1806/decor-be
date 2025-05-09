@@ -60,7 +60,7 @@ class PageSerializer(serializers.ModelSerializer):
 class ContactMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactMessage
-        fields = ["id", "name", "email", "subject", "message", "created_at"]
+        fields = ["id", "name", "phone_number", "message", "created_at"]
 
 
 class BlogCategorySerializer(serializers.ModelSerializer):
@@ -85,6 +85,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "id",
             "title",
             "slug",
+            "thumbnail",
             "description",
             "content",
             "author_name",
