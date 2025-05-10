@@ -58,14 +58,14 @@ class ProductImage(models.Model):
     product = models.ForeignKey(
         Product, related_name="images", on_delete=models.CASCADE
     )
-    image = models.ImageField(upload_to="products/")
+    image = models.ImageField(upload_to="products/", help_text="Size: 800 x 800px")
     alt_text = models.CharField(max_length=255, blank=True)
     sort_order = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ["sort_order"]
-        verbose_name = "Hình ảnh sản phẩm"
-        verbose_name_plural = "Hình ảnh sản phẩm"
+        verbose_name = "Hình ảnh sản phẩm (Size: 800 x 800px)"
+        verbose_name_plural = "Hình ảnh sản phẩm (Size: 800 x 800px)"
 
     def __str__(self):
         return f"{self.product.name} – Image #{self.sort_order}"
@@ -165,7 +165,9 @@ class BlogPost(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    thumbnail = models.ImageField(upload_to="blog/", blank=True, null=True)
+    thumbnail = models.ImageField(
+        upload_to="blog/", blank=True, null=True, help_text="Size: 450 x 450px"
+    )
     slug = models.SlugField(
         max_length=255,
         unique=True,
@@ -252,12 +254,12 @@ class ContactInfo(models.Model):
 
 class Slide(models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="slides/")
+    image = models.ImageField(upload_to="slides/", help_text="Size: 1920 x 742 px")
     link = models.URLField(blank=True, null=True)
     sort_order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ["sort_order"]
+        ordering = ["-id"]
         verbose_name = "Slide"
         verbose_name_plural = "Slides"
 
