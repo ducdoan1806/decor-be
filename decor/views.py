@@ -26,6 +26,11 @@ class PageViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ["title", "content"]
 
 
+class TrackingCodeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = TrackingCode.objects.all()
+    serializer_class = TrackingCodeSerializer
+
+
 class ContactMessageViewSet(viewsets.ModelViewSet):
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer

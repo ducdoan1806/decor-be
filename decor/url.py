@@ -13,6 +13,7 @@ router.register(r"blog/comments", BlogCommentViewSet)
 router.register(r"faqs", FAQViewSet)
 router.register(r"contact-info", ContactInfoViewSet)
 router.register(r"slide", SlideViewSet)
+router.register(r"tracking-codes", TrackingCodeViewSet, basename="trackingcode")
 
 urlpatterns = [
     path("", include(router.urls)),

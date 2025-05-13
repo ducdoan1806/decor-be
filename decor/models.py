@@ -129,6 +129,14 @@ class GoogleServiceAccount(models.Model):
         return self.name
 
 
+class TrackingCode(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=20, blank=True)

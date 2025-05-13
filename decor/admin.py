@@ -55,7 +55,9 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline, ProductVariantInline, ProductReviewInline]
 
 
-# --- Page Admin ---
+@admin.register(TrackingCode)
+class TrackingCodeAdmin(admin.ModelAdmin):
+    list_display = ("name", "code")
 
 
 @admin.register(Page)

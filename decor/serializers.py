@@ -57,6 +57,12 @@ class PageSerializer(serializers.ModelSerializer):
         fields = ["id", "slug", "title", "content", "created_at", "updated_at"]
 
 
+class TrackingCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrackingCode
+        fields = ["name", "code"]
+
+
 class ContactMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactMessage
