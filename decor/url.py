@@ -14,6 +14,9 @@ router.register(r"faqs", FAQViewSet)
 router.register(r"contact-info", ContactInfoViewSet)
 router.register(r"slide", SlideViewSet)
 router.register(r"tracking-codes", TrackingCodeViewSet, basename="trackingcode")
+router.register(
+    r"website-information", WebsiteInfomationViewSet, basename="websiteInformation"
+)
 
 urlpatterns = [
     path("", include(router.urls)),

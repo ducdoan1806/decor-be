@@ -76,3 +76,8 @@ class ContactInfoViewSet(viewsets.ReadOnlyModelViewSet):
 class SlideViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Slide.objects.all()
     serializer_class = SlideSerializer
+
+
+class WebsiteInfomationViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = WebsiteInfomation.objects.all()
+    serializer_class = WebsiteInfomationSerializer

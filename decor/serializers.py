@@ -120,3 +120,9 @@ class SlideSerializer(serializers.ModelSerializer):
     class Meta:
         model = Slide
         fields = ["id", "title", "link", "image", "sort_order"]
+
+
+class WebsiteInfomationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WebsiteInfomation
+        fields = ["id", "title", "description", "thumbnail", "url", "siteName"]

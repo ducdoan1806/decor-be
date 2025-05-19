@@ -273,3 +273,20 @@ class Slide(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class WebsiteInfomation(models.Model):
+    title = models.CharField(max_length=255, default="default")
+    description = models.CharField(max_length=255, blank=True)
+    thumbnail = models.ImageField(
+        upload_to="thumbnail/", blank=True, null=True, help_text="Size: 1200 x 630 px"
+    )
+    url = models.CharField(max_length=255, blank=True)
+    siteName = models.CharField(max_length=255, blank=True)
+
+    class Meta:
+        verbose_name = "Thông tin website"
+        verbose_name_plural = "Thông tin website"
+
+    def __str__(self):
+        return self.title

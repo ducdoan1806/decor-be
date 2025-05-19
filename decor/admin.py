@@ -180,3 +180,26 @@ class SlideAdmin(admin.ModelAdmin):
         return "-"
 
     image_preview.short_description = "Preview"
+
+
+@admin.register(WebsiteInfomation)
+class WebsiteInfomationAdmin(admin.ModelAdmin):
+    list_display = ("title", "url", "siteName", "description")
+    readonly_fields = ("thumbnail_preview",)
+    fields = (
+        "title",
+        "url",
+        "siteName",
+        "description",
+        "thumbnail",
+        "thumbnail_preview",
+    )
+
+    def thumbnail_preview(self, obj):
+        if obj.thumbnail:
+            return format_html(
+                '<img src="{}" style="height: 120px;" />', obj.thumbnail.url
+            )
+        return "-"
+
+    thumbnail_preview.short_description = "Thumbnail"
