@@ -46,12 +46,29 @@ class ProductReviewInline(admin.StackedInline):
     can_delete = False
 
 
+class ProductForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+    def clean(self):
+        cleaned_data = super().clean()
+        title = cleaned_data.get("title")
+        slug = cleaned_data.get("slug")
+        if not slug and title:
+            cleaned_data["slug"] = slugify(title, allow_unicode=True)
+        return cleaned_data
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("name", "price", "created_at", "category", "updated_at")
     search_fields = ("name",)
     list_filter = ("category", "created_at")
     prepopulated_fields = {"slug": ("name",)}
+    form = ProductForm
     inlines = [ProductImageInline, ProductVariantInline, ProductReviewInline]
 
 
