@@ -3,6 +3,30 @@
 from django.db import models
 from django.utils.text import slugify
 
+from PIL import Image
+from django.core.files.base import ContentFile
+import io
+
+
+def resize_image(image_field, size=(800, 600), quality=75):
+    from PIL import Image
+
+    img = Image.open(image_field)
+    img = img.convert("RGB")
+
+    try:
+        resample = Image.Resampling.LANCZOS
+    except AttributeError:
+        resample = Image.LANCZOS
+
+    img.thumbnail(size, resample)
+
+    buffer = io.BytesIO()
+    name = image_field.name.rsplit("/", 1)[-1].split(".")[0]
+    img.save(buffer, format="WEBP", quality=quality)
+
+    return ContentFile(buffer.getvalue(), name=f"{name}.webp")
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -66,6 +90,12 @@ class ProductImage(models.Model):
         ordering = ["sort_order"]
         verbose_name = "Hình ảnh sản phẩm (Size: 800 x 800px)"
         verbose_name_plural = "Hình ảnh sản phẩm (Size: 800 x 800px)"
+
+    def save(self, *args, **kwargs):
+        # Resize nếu ảnh mới và chưa phải .webp
+        if self.image and not self.image.name.endswith(".webp"):
+            self.image = resize_image(self.image, size=(800, 800), quality=85)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.product.name} – Image #{self.sort_order}"
@@ -198,6 +228,8 @@ class BlogPost(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
+        if self.thumbnail and not self.thumbnail.name.endswith(".webp"):
+            self.thumbnail = resize_image(self.thumbnail, size=(450, 450), quality=80)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -271,6 +303,12 @@ class Slide(models.Model):
         verbose_name = "Slide"
         verbose_name_plural = "Slides"
 
+    def save(self, *args, **kwargs):
+        # Resize ảnh trước khi lưu
+        if self.image and not self.image.name.endswith(".webp"):
+            self.image = resize_image(self.image, size=(1920, 742), quality=85)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
@@ -287,6 +325,11 @@ class WebsiteInfomation(models.Model):
     class Meta:
         verbose_name = "Thông tin website"
         verbose_name_plural = "Thông tin website"
+
+    def save(self, *args, **kwargs):
+        if self.thumbnail and not self.thumbnail.name.endswith(".webp"):
+            self.thumbnail = resize_image(self.thumbnail, size=(1200, 630), quality=85)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
